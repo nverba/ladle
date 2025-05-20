@@ -26,7 +26,7 @@ export const Provider = ({ children }) =>
 `;
 
 /**
- * @param config {import("../../shared/types").Config}
+ * @param config {import("../../shared/types").Config & { globbyConfig?: import("globby").Options }}
  * @param configFolder {string}
  * @param mode {string}
  */
@@ -109,6 +109,7 @@ function ladlePlugin(config, configFolder, mode) {
           const entryData = await getEntryData(
             await globby(
               Array.isArray(config.stories) ? config.stories : [config.stories],
+              config.globbyConfig || {},
             ),
           );
           detectDuplicateStoryNames(entryData);

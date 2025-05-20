@@ -247,6 +247,7 @@ export type Config = {
       defaultState: number;
     };
   };
+  globbyConfig?: import("globby").Options;
 };
 
 export type UserConfig = RecursivePartial<Config>;

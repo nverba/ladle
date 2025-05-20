@@ -103,11 +103,13 @@ const getBaseViteConfig = async (ladleConfig, configFolder, viteConfig) => {
     };
   }
 
+  // Pass globbyConfig to the globby method
   const storyEntries = (
     await globby(
       Array.isArray(ladleConfig.stories)
         ? ladleConfig.stories
         : [ladleConfig.stories],
+      ladleConfig.globbyConfig || {},
     )
   ).map((story) => path.join(process.cwd(), story));
 
@@ -155,7 +157,7 @@ const getBaseViteConfig = async (ladleConfig, configFolder, viteConfig) => {
         ...(ladleConfig.addons.msw.enabled ? ["msw"] : []),
         ...(ladleConfig.addons.msw.enabled ? ["msw/browser"] : []),
         ...(inladleMonorepo ? [] : ["@ladle/react"]),
-        ...(!!resolve.alias ? [] : ["react-dom/client"]),
+        ...(resolve.alias ? [] : ["react-dom/client"]),
       ],
       entries: [
         path.join(process.cwd(), ".ladle/components.js"),
